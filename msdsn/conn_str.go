@@ -182,6 +182,7 @@ func Parse(dsn string) (Config, error) {
 	}
 
 	p.Parameters = params
+	p.Database = params["database"]
 
 	strlog, ok := params["log"]
 	if ok {
@@ -192,9 +193,19 @@ func Parse(dsn string) (Config, error) {
 		p.LogFlags = Log(flags)
 	}
 
-	p.Database = params["database"]
-	p.User = params["user id"]
-	p.Password = params["password"]
+	user, ok := params["user id"]
+	if ok {
+		p.User = user
+	} else {
+		p.User = params["uid"]
+	}
+
+	password, ok := params["password"]
+	if ok {
+		p.Password = password
+	} else {
+		p.Password = params["pwd"]
+	}
 
 	p.Port = 0
 	strport, ok := params["port"]

@@ -54,6 +54,9 @@ func TestValidConnectionString(t *testing.T) {
 		{"server=server\\instance;database=testdb;user id=tester;password=pwd", func(p Config) bool {
 			return p.Host == "server" && p.Instance == "instance" && p.User == "tester" && p.Password == "pwd"
 		}},
+		{"server=server\\instance;database=testdb;uid=tester;pwd=pwd", func(p Config) bool {
+			return p.Host == "server" && p.Instance == "instance" && p.User == "tester" && p.Password == "pwd"
+		}},
 		{"server=.", func(p Config) bool { return p.Host == "localhost" }},
 		{"server=(local)", func(p Config) bool { return p.Host == "localhost" }},
 		{"ServerSPN=serverspn;Workstation ID=workstid", func(p Config) bool { return p.ServerSPN == "serverspn" && p.Workstation == "workstid" }},
